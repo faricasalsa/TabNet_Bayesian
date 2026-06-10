@@ -1,0 +1,704 @@
+✓ Reproducibility set with seed: 123
+============================================================
+LIBRARIES IMPORTED SUCCESSFULLY
+============================================================
+PyTorch version: 2.10.0+cpu
+NumPy version: 1.26.4
+Pandas version: 3.0.1
+Reproducibility seed: 123
+Output directory: tabnet_bayesian
+============================================================
+============================================================
+LOADING CREDIT CARD DEFAULT DATASET
+============================================================
+✓ File loaded: credit_card_default.csv
+✓ Dataset loaded: (45528, 19)
+✓ Target distribution:
+credit_card_default
+0    41831
+1     3697
+Name: count, dtype: int64
+
+============================================================
+SAVING TEST DATA BEFORE NORMALIZATION
+============================================================
+✓ Original dataset saved to 'tabnet_bayesian/original_dataset.csv'
+  - Shape: (45528, 19)
+============================================================
+REMOVING IDENTIFIER COLUMNS
+============================================================
+✓ Removed identifier columns: ['customer_id', 'name']
+============================================================
+IDENTIFYING COLUMN TYPES
+============================================================
+✓ Continuous features: ['age', 'net_yearly_income', 'no_of_days_employed', 'total_family_members', 'yearly_debt_payments', 'credit_limit', 'credit_score', 'no_of_children']
+✓ Categorical features: ['gender', 'owns_car', 'owns_house', 'occupation_type', 'migrant_worker']
+============================================================
+HANDLING MISSING VALUES DENGAN KNN IMPUTER
+============================================================
+✓ Feature 'owns_car' has 547 missing values
+✓ Feature 'no_of_children' has 774 missing values
+✓ Feature 'no_of_days_employed' has 463 missing values
+✓ Feature 'total_family_members' has 83 missing values
+✓ Feature 'migrant_worker' has 87 missing values
+✓ Feature 'yearly_debt_payments' has 95 missing values
+✓ Feature 'credit_score' has 8 missing values
+✓ Created missing indicator: owns_car_missing
+✓ Created missing indicator: no_of_children_missing
+✓ Created missing indicator: no_of_days_employed_missing
+✓ Created missing indicator: total_family_members_missing
+✓ Created missing indicator: migrant_worker_missing
+✓ Created missing indicator: yearly_debt_payments_missing
+✓ Created missing indicator: credit_score_missing
+✓ Filled categorical 'owns_car' with mode
+✓ Filled categorical 'migrant_worker' with mode
+
+Mengisi missing values pada fitur: ['no_of_children', 'no_of_days_employed', 'total_family_members', 'yearly_debt_payments', 'credit_score']
+✓ KNN Imputer applied with n_neighbors=5
+✓ Missing values handled with KNN Imputer
+
+============================================================
+OUTLIER HANDLING WITH WINSORIZATION
+============================================================
+  age: handled 0 outliers
+  net_yearly_income: handled 912 outliers
+  no_of_days_employed: handled 437 outliers
+  total_family_members: handled 78 outliers
+  yearly_debt_payments: handled 912 outliers
+  credit_limit: handled 912 outliers
+  credit_score: handled 872 outliers
+  no_of_children: handled 82 outliers
+  owns_car_missing: handled 0 outliers
+  no_of_children_missing: handled 0 outliers
+  no_of_days_employed_missing: handled 0 outliers
+  total_family_members_missing: handled 83 outliers
+  migrant_worker_missing: handled 87 outliers
+  yearly_debt_payments_missing: handled 95 outliers
+  credit_score_missing: handled 8 outliers
+
+✓ Outlier handling completed
+  Total outliers handled: 4478
+============================================================
+ENCODING CATEGORICAL VARIABLES
+============================================================
+✓ Encoded 'gender'
+✓ Encoded 'owns_car'
+✓ Encoded 'owns_house'
+✓ Encoded 'occupation_type'
+✓ Encoded 'migrant_worker'
+============================================================
+SEPARATE FEATURES
+============================================================
+✓ Features shape: (45528, 23)
+✓ Target shape: (45528,)
+============================================================
+PREPARING CATEGORICAL FEATURES INFO FOR TABNET
+============================================================
+✓ Categorical 'gender' at index 1
+✓ Categorical 'owns_car' at index 2
+✓ Categorical 'owns_house' at index 3
+✓ Categorical 'occupation_type' at index 7
+✓ Categorical 'migrant_worker' at index 9
+============================================================
+SPLITTING DATA (80-10-10)
+============================================================
+✓ Training: (36422, 23) (80.0%)
+✓ Validation: (4553, 23) (10.0%)
+✓ Test: (4553, 23) (10.0%)
+
+============================================================
+SAVING TEST DATA BEFORE NORMALIZATION (RAW SPLIT)
+============================================================
+✓ Test data before normalization saved to 'tabnet_bayesian/test_data_before_normalization.csv'
+  - Shape: (4553, 24)
+  - Columns: ['age', 'gender', 'owns_car', 'owns_house', 'no_of_children', 'net_yearly_income', 'no_of_days_employed', 'occupation_type', 'total_family_members', 'migrant_worker', 'yearly_debt_payments', 'credit_limit', 'credit_limit_used(%)', 'credit_score', 'prev_defaults', 'default_in_last_6months', 'owns_car_missing', 'no_of_children_missing', 'no_of_days_employed_missing', 'total_family_members_missing', 'migrant_worker_missing', 'yearly_debt_payments_missing', 'credit_score_missing', 'actual_target']
+✓ Train data before normalization saved to 'tabnet_bayesian/train_data_before_normalization.csv'
+✓ Validation data before normalization saved to 'tabnet_bayesian/valid_data_before_normalization.csv'
+============================================================
+NORMALIZATION (HANYA PADA DATA TRAIN)
+============================================================
+✓ Normalized 15 continuous features using ONLY train data statistics
+✓ Normalization completed (only on train data)
+
+============================================================
+SAVING NORMALIZATION PARAMETERS
+============================================================
+✓ Normalization parameters saved to 'tabnet_bayesian/normalization_parameters.csv'
+                         feature   mean_train    std_train
+0                            age      39.0018       9.5442
+1                 no_of_children       0.4184       0.7067
+2              net_yearly_income 195,254.4445  99,177.4263
+3            no_of_days_employed  67,794.5619 138,966.2522
+4           total_family_members       2.1562       0.9016
+5           yearly_debt_payments  31,595.9439  16,154.1060
+6                   credit_limit  42,396.4893  26,134.2812
+7                   credit_score     782.7031     100.2218
+8               owns_car_missing       0.0118       0.1079
+9         no_of_children_missing       0.0167       0.1283
+10   no_of_days_employed_missing       0.0100       0.0996
+11  total_family_members_missing       0.0000       1.0000
+12        migrant_worker_missing       0.0000       1.0000
+13  yearly_debt_payments_missing       0.0000       1.0000
+14          credit_score_missing       0.0000       1.0000
+
+============================================================
+SAVING TEST DATA AFTER NORMALIZATION
+============================================================
+✓ Test data after normalization saved to 'tabnet_bayesian/test_data_after_normalization.csv'
+  - Shape: (4553, 24)
+  - Columns: ['age', 'gender', 'owns_car', 'owns_house', 'no_of_children', 'net_yearly_income', 'no_of_days_employed', 'occupation_type', 'total_family_members', 'migrant_worker', 'yearly_debt_payments', 'credit_limit', 'credit_limit_used(%)', 'credit_score', 'prev_defaults', 'default_in_last_6months', 'owns_car_missing', 'no_of_children_missing', 'no_of_days_employed_missing', 'total_family_members_missing', 'migrant_worker_missing', 'yearly_debt_payments_missing', 'credit_score_missing', 'actual_target']
+✓ Train data after normalization saved to 'tabnet_bayesian/train_data_after_normalization.csv'
+✓ Validation data after normalization saved to 'tabnet_bayesian/valid_data_after_normalization.csv'
+
+============================================================
+SAVING ATTACHMENT FILES
+============================================================
+✓ Processed dataset (complete) saved to 'tabnet_bayesian/processed_dataset.csv'
+✓ Data split summary saved to 'tabnet_bayesian/data_split_summary.csv'
+============================================================
+FINAL DATA PREPARATION
+============================================================
+✓ Data converted to numpy arrays
+
+============================================================
+OPTUNA HYPERPARAMETER TUNING (MULTIPLE TRIALS)
+============================================================
+✓ Using only training data for Optuna tuning: 36422 samples
+✓ Validation data size: 4553 samples
+✓ Test data is HIDDEN and not used in tuning
+[I 2026-06-09 16:56:30,001] A new study created in memory with name: TabNet Optimization
+
+Running Optuna optimization with 30 trials...
+Each trial will train a TabNet model on training set and validate on validation set
+------------------------------------------------------------
+  0%|                                                                                                                                                 | 0/30 [00:00<?, ?it/s]
+Early stopping occurred at epoch 29 with best_epoch = 19 and best_val_0_auc = 0.99308
+[I 2026-06-09 17:03:08,247] Trial 0 finished with value: 0.9930839756801985 and parameters: {'n_da': 52, 'n_steps': 5, 'gamma': 1.226851453564203, 'n_independent': 3, 'n_shared': 4, 'momentum': 0.1750115194485398, 'lambda_sparse': 0.0008755734725056498, 'clip_value': 1.527244607877295, 'lr': 0.0009159332036121727, 'weight_decay': 6.084642077147055e-06, 'batch_size': 512, 'virtual_batch_size': 512, 'max_epochs': 35}. Best is trial 0 with value: 0.9930839756801985.
+Best trial: 0. Best value: 0.993084:   3%|███▏                                                                                             | 1/30 [06:38<3:12:25, 398.12s/it]Stop training because you reached max_epochs = 45 with best_epoch = 40 and best_val_0_auc = 0.98472
+[I 2026-06-09 17:10:26,597] Trial 1 finished with value: 0.9847196826278826 and parameters: {'n_da': 28, 'n_steps': 7, 'gamma': 1.531827587096866, 'n_independent': 4, 'n_shared': 5, 'momentum': 0.2925375766956478, 'lambda_sparse': 6.808799287054754e-05, 'clip_value': 1.5836650738553324, 'lr': 0.000442504638714582, 'weight_decay': 5.29148185520749e-06, 'batch_size': 1024, 'virtual_batch_size': 256, 'max_epochs': 45}. Best is trial 0 with value: 0.9930839756801985.
+Best trial: 0. Best value: 0.993084:   7%|██████▍                                                                                          | 2/30 [13:56<3:16:49, 421.76s/it]Stop training because you reached max_epochs = 33 with best_epoch = 23 and best_val_0_auc = 0.99042
+[I 2026-06-09 17:21:45,690] Trial 2 finished with value: 0.9904206860458354 and parameters: {'n_da': 40, 'n_steps': 5, 'gamma': 1.4263513069628082, 'n_independent': 5, 'n_shared': 5, 'momentum': 0.20571630359489126, 'lambda_sparse': 7.4448997719782e-05, 'clip_value': 0.6734275926189436, 'lr': 0.00043109299276821524, 'weight_decay': 6.755421067424914e-06, 'batch_size': 256, 'virtual_batch_size': 128, 'max_epochs': 33}. Best is trial 0 with value: 0.9930839756801985.
+Best trial: 0. Best value: 0.993084:  10%|█████████▋                                                                                       | 3/30 [25:15<4:02:40, 539.27s/it]
+Early stopping occurred at epoch 31 with best_epoch = 21 and best_val_0_auc = 0.98623
+[I 2026-06-09 17:27:33,187] Trial 3 finished with value: 0.986226101789095 and parameters: {'n_da': 60, 'n_steps': 7, 'gamma': 1.5450680064664648, 'n_independent': 2, 'n_shared': 2, 'momentum': 0.17263866229963365, 'lambda_sparse': 0.00011063748563756826, 'clip_value': 1.8131852626927625, 'lr': 0.001049167127831951, 'weight_decay': 2.1808588898416348e-05, 'batch_size': 1024, 'virtual_batch_size': 128, 'max_epochs': 37}. Best is trial 0 with value: 0.9930839756801985.
+Best trial: 0. Best value: 0.993084:  13%|████████████▉                                                                                    | 4/30 [31:03<3:20:52, 463.56s/it]
+Early stopping occurred at epoch 32 with best_epoch = 22 and best_val_0_auc = 0.99234
+[I 2026-06-09 17:40:07,209] Trial 4 finished with value: 0.9923435268881122 and parameters: {'n_da': 32, 'n_steps': 7, 'gamma': 1.095712516612387, 'n_independent': 5, 'n_shared': 4, 'momentum': 0.2921323796940824, 'lambda_sparse': 1.1178605247405061e-06, 'clip_value': 1.3916478191675639, 'lr': 0.0012988840529683243, 'weight_decay': 2.07931022057609e-06, 'batch_size': 512, 'virtual_batch_size': 128, 'max_epochs': 58}. Best is trial 0 with value: 0.9930839756801985.
+Best trial: 0. Best value: 0.993084:  17%|████████████████▏                                                                                | 5/30 [43:37<3:56:47, 568.30s/it]
+Early stopping occurred at epoch 33 with best_epoch = 23 and best_val_0_auc = 0.99366
+[I 2026-06-09 17:54:38,581] Trial 5 finished with value: 0.9936570804608099 and parameters: {'n_da': 60, 'n_steps': 5, 'gamma': 1.0435914637990407, 'n_independent': 2, 'n_shared': 2, 'momentum': 0.28493394387603127, 'lambda_sparse': 0.0009684460811380895, 'clip_value': 1.0338722985761892, 'lr': 0.0033503920352608556, 'weight_decay': 1.5358677921079944e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 50}. Best is trial 5 with value: 0.9936570804608099.
+Best trial: 5. Best value: 0.993657:  20%|███████████████████▍                                                                             | 6/30 [58:08<4:28:32, 671.34s/it]Stop training because you reached max_epochs = 30 with best_epoch = 25 and best_val_0_auc = 0.98986
+[I 2026-06-09 18:00:50,850] Trial 6 finished with value: 0.989856626887466 and parameters: {'n_da': 28, 'n_steps': 4, 'gamma': 1.321980606468308, 'n_independent': 4, 'n_shared': 5, 'momentum': 0.22577036447071824, 'lambda_sparse': 0.00036589583217087207, 'clip_value': 1.0772567169136416, 'lr': 0.0004301062903831537, 'weight_decay': 5.111276217134532e-06, 'batch_size': 512, 'virtual_batch_size': 256, 'max_epochs': 30}. Best is trial 5 with value: 0.9936570804608099.
+Best trial: 5. Best value: 0.993657:  23%|██████████████████████▏                                                                        | 7/30 [1:04:20<3:39:52, 573.57s/it]Stop training because you reached max_epochs = 32 with best_epoch = 28 and best_val_0_auc = 0.99224
+[I 2026-06-09 18:16:19,721] Trial 7 finished with value: 0.9922407944640792 and parameters: {'n_da': 64, 'n_steps': 10, 'gamma': 1.2076358611963245, 'n_independent': 2, 'n_shared': 3, 'momentum': 0.3617454353376615, 'lambda_sparse': 0.0008930847112671619, 'clip_value': 0.8863130962311246, 'lr': 0.0013449869974396164, 'weight_decay': 4.110904314730578e-05, 'batch_size': 512, 'virtual_batch_size': 512, 'max_epochs': 32}. Best is trial 5 with value: 0.9936570804608099.
+Best trial: 5. Best value: 0.993657:  27%|█████████████████████████▎                                                                     | 8/30 [1:19:49<4:11:46, 686.68s/it]Stop training because you reached max_epochs = 38 with best_epoch = 35 and best_val_0_auc = 0.9932
+[I 2026-06-09 18:26:39,658] Trial 8 finished with value: 0.9932009226534687 and parameters: {'n_da': 40, 'n_steps': 4, 'gamma': 1.4506364905187348, 'n_independent': 3, 'n_shared': 1, 'momentum': 0.125775702437465, 'lambda_sparse': 0.0006063909630600336, 'clip_value': 1.353505597145293, 'lr': 0.0008219094901581803, 'weight_decay': 3.214045211274319e-05, 'batch_size': 256, 'virtual_batch_size': 128, 'max_epochs': 38}. Best is trial 5 with value: 0.9936570804608099.
+Best trial: 5. Best value: 0.993657:  30%|████████████████████████████▌                                                                  | 9/30 [1:30:09<3:53:02, 665.82s/it]
+Early stopping occurred at epoch 28 with best_epoch = 18 and best_val_0_auc = 0.99304
+[I 2026-06-09 18:36:17,612] Trial 9 finished with value: 0.9930445626118588 and parameters: {'n_da': 36, 'n_steps': 8, 'gamma': 1.1113921716077158, 'n_independent': 4, 'n_shared': 5, 'momentum': 0.2815613946118085, 'lambda_sparse': 2.0940335232736606e-05, 'clip_value': 1.1573215765658371, 'lr': 0.003389941396985175, 'weight_decay': 1.3529570264331483e-05, 'batch_size': 1024, 'virtual_batch_size': 256, 'max_epochs': 47}. Best is trial 5 with value: 0.9936570804608099.
+Best trial: 5. Best value: 0.993657:  33%|███████████████████████████████▎                                                              | 10/30 [1:39:47<3:32:53, 638.69s/it]
+Early stopping occurred at epoch 29 with best_epoch = 19 and best_val_0_auc = 0.99348
+[I 2026-06-09 18:45:38,221] Trial 10 finished with value: 0.9934768141318464 and parameters: {'n_da': 52, 'n_steps': 3, 'gamma': 1.895876365262173, 'n_independent': 1, 'n_shared': 1, 'momentum': 0.012516815945733478, 'lambda_sparse': 8.229199694417398e-06, 'clip_value': 0.7988835979438342, 'lr': 0.009388108773044959, 'weight_decay': 9.925885340310707e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 58}. Best is trial 5 with value: 0.9936570804608099.
+Best trial: 5. Best value: 0.993657:  37%|██████████████████████████████████▍                                                           | 11/30 [1:49:08<3:14:41, 614.80s/it]
+Early stopping occurred at epoch 19 with best_epoch = 9 and best_val_0_auc = 0.99397
+[I 2026-06-09 18:50:19,368] Trial 11 finished with value: 0.9939743233551505 and parameters: {'n_da': 52, 'n_steps': 3, 'gamma': 1.8915630113429374, 'n_independent': 1, 'n_shared': 1, 'momentum': 0.024166695573298924, 'lambda_sparse': 7.038584491184765e-06, 'clip_value': 0.5042155892835627, 'lr': 0.008629234437643067, 'weight_decay': 7.750482028439519e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 60}. Best is trial 11 with value: 0.9939743233551505.
+Best trial: 11. Best value: 0.993974:  40%|█████████████████████████████████████▏                                                       | 12/30 [1:53:49<2:33:59, 513.29s/it]
+Early stopping occurred at epoch 51 with best_epoch = 41 and best_val_0_auc = 0.99408
+[I 2026-06-09 19:10:57,069] Trial 12 finished with value: 0.9940835169379276 and parameters: {'n_da': 52, 'n_steps': 3, 'gamma': 1.9807496660237638, 'n_independent': 1, 'n_shared': 2, 'momentum': 0.02053183714294186, 'lambda_sparse': 3.712433428044765e-06, 'clip_value': 0.5170879188419232, 'lr': 0.009081080450602238, 'weight_decay': 7.730019356418429e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 52}. Best is trial 12 with value: 0.9940835169379276.
+Best trial: 12. Best value: 0.994084:  43%|████████████████████████████████████████▎                                                    | 13/30 [2:14:26<3:27:36, 732.74s/it]Stop training because you reached max_epochs = 53 with best_epoch = 50 and best_val_0_auc = 0.98926
+[I 2026-06-09 19:15:54,328] Trial 13 finished with value: 0.9892634925147475 and parameters: {'n_da': 48, 'n_steps': 3, 'gamma': 1.9306565684744836, 'n_independent': 1, 'n_shared': 2, 'momentum': 0.028586921250236985, 'lambda_sparse': 3.77079446313518e-06, 'clip_value': 0.5346985365098751, 'lr': 0.00010288216042649286, 'weight_decay': 8.854692000855781e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 53}. Best is trial 12 with value: 0.9940835169379276.
+Best trial: 12. Best value: 0.994084:  47%|███████████████████████████████████████████▍                                                 | 14/30 [2:19:24<2:40:19, 601.20s/it]
+Early stopping occurred at epoch 25 with best_epoch = 15 and best_val_0_auc = 0.99368
+[I 2026-06-09 19:20:10,646] Trial 14 finished with value: 0.9936819559219752 and parameters: {'n_da': 52, 'n_steps': 3, 'gamma': 1.7505432286375397, 'n_independent': 1, 'n_shared': 1, 'momentum': 0.09054521009370607, 'lambda_sparse': 3.1212052170218806e-06, 'clip_value': 0.5126612722532582, 'lr': 0.008814685227420654, 'weight_decay': 5.2301212281269785e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 60}. Best is trial 12 with value: 0.9940835169379276.
+Best trial: 12. Best value: 0.994084:  50%|██████████████████████████████████████████████▌                                              | 15/30 [2:23:40<2:04:18, 497.24s/it]
+Early stopping occurred at epoch 22 with best_epoch = 12 and best_val_0_auc = 0.99369
+[I 2026-06-09 19:23:52,084] Trial 15 finished with value: 0.9936851865013471 and parameters: {'n_da': 44, 'n_steps': 4, 'gamma': 1.71483840773809, 'n_independent': 1, 'n_shared': 2, 'momentum': 0.07877609446682317, 'lambda_sparse': 1.2316286845474796e-05, 'clip_value': 0.7472049124099824, 'lr': 0.004710539809564169, 'weight_decay': 4.848142908638633e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 54}. Best is trial 12 with value: 0.9940835169379276.
+Best trial: 12. Best value: 0.994084:  53%|█████████████████████████████████████████████████▌                                           | 16/30 [2:27:21<1:36:39, 414.23s/it]Stop training because you reached max_epochs = 42 with best_epoch = 38 and best_val_0_auc = 0.99392
+[I 2026-06-09 19:50:35,663] Trial 16 finished with value: 0.9939174651582016 and parameters: {'n_da': 56, 'n_steps': 9, 'gamma': 1.9872456645768442, 'n_independent': 2, 'n_shared': 3, 'momentum': 0.06595979157486757, 'lambda_sparse': 1.3652310069263503e-06, 'clip_value': 0.9378529586863766, 'lr': 0.005921422076240331, 'weight_decay': 6.77744214426666e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 42}. Best is trial 12 with value: 0.9940835169379276.
+Best trial: 12. Best value: 0.994084:  57%|████████████████████████████████████████████████████▋                                        | 17/30 [2:54:05<2:47:14, 771.86s/it]
+Early stopping occurred at epoch 33 with best_epoch = 23 and best_val_0_auc = 0.99322
+[I 2026-06-09 19:57:01,621] Trial 17 finished with value: 0.9932248289408223 and parameters: {'n_da': 48, 'n_steps': 6, 'gamma': 1.8067223965593144, 'n_independent': 1, 'n_shared': 1, 'momentum': 0.12925914134107885, 'lambda_sparse': 4.471348353796995e-06, 'clip_value': 0.640450538298142, 'lr': 0.002155176917064066, 'weight_decay': 2.522513696156739e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 54}. Best is trial 12 with value: 0.9940835169379276.
+Best trial: 12. Best value: 0.994084:  60%|███████████████████████████████████████████████████████▊                                     | 18/30 [3:00:31<2:11:10, 655.90s/it]
+Early stopping occurred at epoch 36 with best_epoch = 26 and best_val_0_auc = 0.99373
+[I 2026-06-09 20:05:10,688] Trial 18 finished with value: 0.9937307376704938 and parameters: {'n_da': 64, 'n_steps': 3, 'gamma': 1.6614182755160534, 'n_independent': 2, 'n_shared': 3, 'momentum': 0.03731563996743674, 'lambda_sparse': 3.6509483906857285e-05, 'clip_value': 1.9204744351816672, 'lr': 0.006026180023304602, 'weight_decay': 1.0524742602588072e-06, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 50}. Best is trial 12 with value: 0.9940835169379276.
+Best trial: 12. Best value: 0.994084:  63%|██████████████████████████████████████████████████████████▉                                  | 19/30 [3:08:40<1:51:03, 605.80s/it]
+Early stopping occurred at epoch 25 with best_epoch = 15 and best_val_0_auc = 0.99217
+[I 2026-06-09 20:08:14,506] Trial 19 finished with value: 0.9921671372543953 and parameters: {'n_da': 44, 'n_steps': 6, 'gamma': 1.8553178571712297, 'n_independent': 3, 'n_shared': 2, 'momentum': 0.10451682874966382, 'lambda_sparse': 2.2836794183861246e-06, 'clip_value': 0.5128667793264253, 'lr': 0.0024085474933072427, 'weight_decay': 6.43022906970429e-05, 'batch_size': 1024, 'virtual_batch_size': 256, 'max_epochs': 56}. Best is trial 12 with value: 0.9940835169379276.
+Best trial: 12. Best value: 0.994084:  67%|██████████████████████████████████████████████████████████████                               | 20/30 [3:11:44<1:19:51, 479.10s/it]Stop training because you reached max_epochs = 50 with best_epoch = 48 and best_val_0_auc = 0.98924
+[I 2026-06-09 20:12:53,689] Trial 20 finished with value: 0.9892357095321475 and parameters: {'n_da': 56, 'n_steps': 4, 'gamma': 1.6218455061590022, 'n_independent': 1, 'n_shared': 1, 'momentum': 0.04957213544879331, 'lambda_sparse': 6.513050536127371e-06, 'clip_value': 0.8482747873208901, 'lr': 0.00010218779051968324, 'weight_decay': 1.0548913643063152e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 50}. Best is trial 12 with value: 0.9940835169379276.
+Best trial: 12. Best value: 0.994084:  70%|█████████████████████████████████████████████████████████████████                            | 21/30 [3:16:23<1:02:51, 419.09s/it]Stop training because you reached max_epochs = 41 with best_epoch = 37 and best_val_0_auc = 0.99416
+[I 2026-06-09 21:15:09,951] Trial 21 finished with value: 0.9941578202634862 and parameters: {'n_da': 56, 'n_steps': 10, 'gamma': 1.9791715302771704, 'n_independent': 2, 'n_shared': 3, 'momentum': 0.06315153770265473, 'lambda_sparse': 1.1555751696611154e-06, 'clip_value': 0.9587981205495992, 'lr': 0.006180489033395728, 'weight_decay': 7.019218799818284e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 41}. Best is trial 21 with value: 0.9941578202634862.
+Best trial: 21. Best value: 0.994158:  73%|███████████████████████████████████████████████████████████████████▍                        | 22/30 [4:18:39<3:08:37, 1414.64s/it]
+Early stopping occurred at epoch 39 with best_epoch = 29 and best_val_0_auc = 0.9936
+[I 2026-06-09 21:56:19,823] Trial 22 finished with value: 0.9936028067273585 and parameters: {'n_da': 56, 'n_steps': 9, 'gamma': 1.9975561961520196, 'n_independent': 2, 'n_shared': 4, 'momentum': 0.01370257247556962, 'lambda_sparse': 1.8421871281094318e-06, 'clip_value': 0.7175822061482134, 'lr': 0.009758701823424372, 'weight_decay': 9.573575807987999e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 41}. Best is trial 21 with value: 0.9941578202634862.
+Best trial: 21. Best value: 0.994158:  77%|██████████████████████████████████████████████████████████████████████▌                     | 23/30 [4:59:49<3:21:59, 1731.29s/it]Stop training because you reached max_epochs = 43 with best_epoch = 37 and best_val_0_auc = 0.99397
+[I 2026-06-09 22:12:18,700] Trial 23 finished with value: 0.9939733541813388 and parameters: {'n_da': 48, 'n_steps': 10, 'gamma': 1.8311745050821848, 'n_independent': 1, 'n_shared': 3, 'momentum': 0.05099684404907358, 'lambda_sparse': 1.1304141370823368e-05, 'clip_value': 0.9563972767478129, 'lr': 0.005836173207917865, 'weight_decay': 3.355452670241415e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 43}. Best is trial 21 with value: 0.9941578202634862.
+Best trial: 21. Best value: 0.994158:  80%|█████████████████████████████████████████████████████████████████████████▌                  | 24/30 [5:15:48<2:29:57, 1499.52s/it]
+Early stopping occurred at epoch 33 with best_epoch = 23 and best_val_0_auc = 0.99349
+[I 2026-06-09 22:27:36,780] Trial 24 finished with value: 0.9934871519858371 and parameters: {'n_da': 60, 'n_steps': 8, 'gamma': 1.9231988916143283, 'n_independent': 2, 'n_shared': 2, 'momentum': 0.13042117272177423, 'lambda_sparse': 1.0477972107458326e-06, 'clip_value': 0.622330569446602, 'lr': 0.0039690487384213624, 'weight_decay': 6.256762426808464e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 47}. Best is trial 21 with value: 0.9941578202634862.
+Best trial: 21. Best value: 0.994158:  83%|████████████████████████████████████████████████████████████████████████████▋               | 25/30 [5:31:06<1:50:25, 1325.06s/it]
+Early stopping occurred at epoch 20 with best_epoch = 10 and best_val_0_auc = 0.99153
+[I 2026-06-09 22:34:15,046] Trial 25 finished with value: 0.9915287747704673 and parameters: {'n_da': 52, 'n_steps': 9, 'gamma': 1.7493649039826362, 'n_independent': 1, 'n_shared': 3, 'momentum': 0.07541219248163658, 'lambda_sparse': 5.66681251261368e-06, 'clip_value': 1.2205227821209053, 'lr': 0.002419955063909791, 'weight_decay': 2.26512950778546e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 60}. Best is trial 21 with value: 0.9941578202634862.
+Best trial: 21. Best value: 0.994158:  87%|███████████████████████████████████████████████████████████████████████████████▋            | 26/30 [5:37:44<1:09:47, 1047.00s/it]
+Early stopping occurred at epoch 22 with best_epoch = 12 and best_val_0_auc = 0.99338
+[I 2026-06-09 22:40:16,684] Trial 26 finished with value: 0.9933766661713112 and parameters: {'n_da': 56, 'n_steps': 5, 'gamma': 1.9669779792514317, 'n_independent': 2, 'n_shared': 2, 'momentum': 0.1084931131189332, 'lambda_sparse': 2.5962666474910448e-06, 'clip_value': 0.6178338493406712, 'lr': 0.006943521082945481, 'weight_decay': 3.780228616965742e-05, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 40}. Best is trial 21 with value: 0.9941578202634862.
+Best trial: 21. Best value: 0.994158:  90%|█████████████████████████████████████████████████████████████████████████████████████▌         | 27/30 [5:43:46<42:04, 841.38s/it]
+Early stopping occurred at epoch 33 with best_epoch = 23 and best_val_0_auc = 0.99365
+[I 2026-06-09 22:47:22,196] Trial 27 finished with value: 0.9936467426068192 and parameters: {'n_da': 48, 'n_steps': 8, 'gamma': 1.8633462909455398, 'n_independent': 1, 'n_shared': 1, 'momentum': 0.16538310985632698, 'lambda_sparse': 2.308345497364463e-05, 'clip_value': 0.8323724525539231, 'lr': 0.007212976837259746, 'weight_decay': 2.9028110327203263e-06, 'batch_size': 256, 'virtual_batch_size': 512, 'max_epochs': 52}. Best is trial 21 with value: 0.9941578202634862.
+Best trial: 21. Best value: 0.994158:  93%|████████████████████████████████████████████████████████████████████████████████████████▋      | 28/30 [5:50:52<23:53, 716.61s/it]
+Early stopping occurred at epoch 28 with best_epoch = 18 and best_val_0_auc = 0.99333
+[I 2026-06-09 22:53:51,472] Trial 28 finished with value: 0.9933262691331063 and parameters: {'n_da': 60, 'n_steps': 6, 'gamma': 1.8026285677086278, 'n_independent': 2, 'n_shared': 3, 'momentum': 0.04740570135700349, 'lambda_sparse': 1.8142028875671986e-06, 'clip_value': 1.0403671751404298, 'lr': 0.004750895069131303, 'weight_decay': 7.408745724224245e-05, 'batch_size': 512, 'virtual_batch_size': 128, 'max_epochs': 45}. Best is trial 21 with value: 0.9941578202634862.
+Best trial: 21. Best value: 0.994158:  97%|███████████████████████████████████████████████████████████████████████████████████████████▊   | 29/30 [5:57:21<10:18, 618.41s/it]
+Early stopping occurred at epoch 39 with best_epoch = 29 and best_val_0_auc = 0.97988
+[I 2026-06-09 22:59:29,741] Trial 29 finished with value: 0.9798838283657793 and parameters: {'n_da': 52, 'n_steps': 5, 'gamma': 1.6348693909535048, 'n_independent': 3, 'n_shared': 4, 'momentum': 0.0174144083235135, 'lambda_sparse': 1.2084706495187661e-05, 'clip_value': 1.5967712789117328, 'lr': 0.0002478520766525668, 'weight_decay': 4.66778401581171e-05, 'batch_size': 1024, 'virtual_batch_size': 256, 'max_epochs': 56}. Best is trial 21 with value: 0.9941578202634862.
+Best trial: 21. Best value: 0.994158: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 30/30 [6:02:59<00:00, 725.99s/it]
+
+============================================================
+BEST HYPERPARAMETERS FOUND
+============================================================
+Best validation AUC: 0.994158
+  • n_da: 56
+  • n_steps: 10
+  • gamma: 1.9791715302771704
+  • n_independent: 2
+  • n_shared: 3
+  • momentum: 0.06315153770265473
+  • lambda_sparse: 1.1555751696611154e-06
+  • clip_value: 0.9587981205495992
+  • lr: 0.006180489033395728
+  • weight_decay: 7.019218799818284e-05
+  • batch_size: 256
+  • virtual_batch_size: 512
+  • max_epochs: 41
+
+✓ Optuna study saved to 'tabnet_bayesian/optuna_study.pkl' with 30 trials
+✓ Best hyperparameters saved to 'tabnet_bayesian/best_hyperparameters.csv'
+
+============================================================
+BUILDING FINAL TABNET MODEL WITH BEST HYPERPARAMETERS
+============================================================
+✓ Final TabNet model created with best hyperparameters
+
+============================================================
+TRAINING FINAL TABNET MODEL
+============================================================
+
+Early stopping occurred at epoch 36 with best_epoch = 24 and best_val_weighted_auc = 0.99361
+
+✓ Final model training completed
+
+============================================================
+MASK VISUALIZATION (FEATURE SELECTION MASKS) - DATA TEST
+============================================================
+
+Jumlah sampel data test untuk visualisasi mask: 4553
+Jumlah fitur: 23
+Jumlah decision step TabNet: 10
+
+1. Generating Mask Heatmap for Test Data...
+Mengambil attention mask untuk 4553 sampel (test data)...
+✓ Global mask heatmap data saved to tabnet_bayesian/test_mask_heatmap.csv
+✓ Global mask heatmap saved to tabnet_bayesian/test_mask_heatmap.png
+
+2. Generating Aggregate Mask Importance for Test Data...
+✓ Global aggregate mask importance saved to tabnet_bayesian/test_aggregate_mask_importance.csv
+✓ Global aggregate mask importance plot saved to tabnet_bayesian/test_aggregate_mask_importance.png
+
+============================================================
+COMPARING MASK IMPORTANCE WITH MODEL FEATURE IMPORTANCE
+============================================================
+
+Correlation between Mask Importance and Model Feature Importance: 0.8406
+
+Top 10 Features by Mask Importance:
+                        Feature  Mask_Importance  Model_Importance
+0                  credit_score           0.2063            0.4732
+1          credit_limit_used(%)           0.1187            0.2651
+2                 prev_defaults           0.1046            0.0445
+3           no_of_days_employed           0.0952            0.0366
+4                        gender           0.0754            0.0355
+5       default_in_last_6months           0.0751            0.0153
+6                  credit_limit           0.0563            0.0103
+7  total_family_members_missing           0.0467            0.0089
+8        migrant_worker_missing           0.0395            0.0053
+9          yearly_debt_payments           0.0367            0.0149
+
+Top 10 Features by Model Feature Importance:
+                    Feature  Mask_Importance  Model_Importance
+0              credit_score           0.2063            0.4732
+1      credit_limit_used(%)           0.1187            0.2651
+2             prev_defaults           0.1046            0.0445
+13                      age           0.0208            0.0410
+3       no_of_days_employed           0.0952            0.0366
+4                    gender           0.0754            0.0355
+15           migrant_worker           0.0097            0.0211
+5   default_in_last_6months           0.0751            0.0153
+9      yearly_debt_payments           0.0367            0.0149
+6              credit_limit           0.0563            0.0103
+✓ Importance comparison saved to 'tabnet_bayesian/importance_comparison.png'
+
+============================================================
+PLOT MODEL FEATURE IMPORTANCE
+============================================================
+✓ Model feature importance saved to 'tabnet_bayesian/model_feature_importance.png'
+============================================================
+GETTING PREDICTIONS (MURNI TABNET)
+============================================================
+
+============================================================
+EKSTRAKSI LOGITS ASLI TABNET DARI NETWORK
+============================================================
+✓ Logits asli TabNet berhasil diekstrak langsung dari final_tabnet_model.network
+  logits_train_all shape: (36422, 2)
+  logits_valid_all shape: (4553, 2)
+  logits_test_all shape : (4553, 2)
+  Contoh logits asli sampel test 0: [ 8.045218 -7.041231]
+  Contoh logit difference sampel test 0: -15.086450
+  Maksimum selisih softmax logits vs predict_proba train kelas 1: 0.0000002086
+  Maksimum selisih softmax logits vs predict_proba valid kelas 1: 0.0000001490
+  Maksimum selisih softmax logits vs predict_proba test kelas 0 : 0.0000001192
+  Maksimum selisih softmax logits vs predict_proba test kelas 1 : 0.0000001192
+
+============================================================
+SAVING LOGITS ASLI TABNET TO CSV
+============================================================
+✓ Logits asli train saved to 'tabnet_bayesian/logits_asli_train.csv'
+✓ Logits asli valid saved to 'tabnet_bayesian/logits_asli_valid.csv'
+✓ Logits asli test saved to 'tabnet_bayesian/logits_asli_test.csv'
+✓ Logits asli semua split saved to 'tabnet_bayesian/logits_asli_semua_split.csv'
+
+============================================================
+APPLYING CALIBRATION METHODS
+============================================================
+
+1. BBQ...
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 166/166 [00:00<00:00, 1570.67it/s]
+✓ BBQ applied
+
+2. Temperature Scaling...
+✓ Temperature Scaling applied with T = 1.7164
+
+3. Isotonic Regression...
+✓ Isotonic Regression applied
+
+============================================================
+THRESHOLD OPTIMIZATION FOR TABNET (BEFORE CALIBRATION)
+============================================================
+
+Optimizing threshold for pure TabNet...
+✓ Optimal threshold for TabNet: 0.88
+✓ Best validation F1 for TabNet: 0.837681
+
+============================================================
+THRESHOLD SENSITIVITY ANALYSIS - BEFORE CALIBRATION
+============================================================
+
+Threshold | Recall | Precision | F1-Score | Accuracy
+------------------------------------------------------------
+  0.10     | 1.0000  | 0.5048   | 0.6709    | 0.9205
+  0.12     | 1.0000  | 0.5146   | 0.6796    | 0.9236
+  0.14     | 1.0000  | 0.5197   | 0.6840    | 0.9251
+  0.16     | 1.0000  | 0.5279   | 0.6910    | 0.9275
+  0.18     | 1.0000  | 0.5294   | 0.6923    | 0.9280
+  0.20     | 1.0000  | 0.5325   | 0.6949    | 0.9288
+  0.22     | 1.0000  | 0.5387   | 0.7002    | 0.9306
+  0.24     | 1.0000  | 0.5411   | 0.7022    | 0.9313
+  0.26     | 1.0000  | 0.5434   | 0.7042    | 0.9319
+  0.28     | 1.0000  | 0.5491   | 0.7089    | 0.9335
+  0.30     | 1.0000  | 0.5541   | 0.7130    | 0.9348
+  0.32     | 1.0000  | 0.5557   | 0.7144    | 0.9352
+  0.34     | 1.0000  | 0.5608   | 0.7186    | 0.9365
+  0.36     | 1.0000  | 0.5625   | 0.7200    | 0.9370
+  0.38     | 1.0000  | 0.5660   | 0.7228    | 0.9378
+  0.40     | 1.0000  | 0.5730   | 0.7285    | 0.9396
+  0.42     | 1.0000  | 0.5775   | 0.7321    | 0.9407
+  0.44     | 1.0000  | 0.5793   | 0.7336    | 0.9411
+  0.46     | 1.0000  | 0.5839   | 0.7373    | 0.9422
+  0.48     | 0.9973  | 0.5869   | 0.7390    | 0.9429
+  0.50     | 0.9973  | 0.5907   | 0.7419    | 0.9438
+  0.52     | 0.9973  | 0.5916   | 0.7427    | 0.9440
+  0.54     | 0.9973  | 0.5964   | 0.7465    | 0.9451
+  0.56     | 0.9973  | 0.6013   | 0.7503    | 0.9462
+  0.58     | 0.9973  | 0.6063   | 0.7541    | 0.9473
+  0.60     | 0.9973  | 0.6144   | 0.7603    | 0.9490
+  0.62     | 0.9946  | 0.6199   | 0.7638    | 0.9501
+  0.64     | 0.9919  | 0.6256   | 0.7673    | 0.9512
+  0.66     | 0.9837  | 0.6248   | 0.7642    | 0.9508
+  0.68     | 0.9810  | 0.6373   | 0.7727    | 0.9532
+  0.70     | 0.9729  | 0.6539   | 0.7821    | 0.9561
+  0.72     | 0.9675  | 0.6673   | 0.7898    | 0.9583
+  0.74     | 0.9512  | 0.6776   | 0.7914    | 0.9594
+  0.76     | 0.9431  | 0.6905   | 0.7973    | 0.9611
+  0.78     | 0.9295  | 0.7072   | 0.8033    | 0.9631
+  0.80     | 0.9051  | 0.7245   | 0.8048    | 0.9644
+  0.82     | 0.8835  | 0.7512   | 0.8120    | 0.9668
+  0.84     | 0.8564  | 0.7980   | 0.8261    | 0.9708
+  0.86     | 0.8130  | 0.8547   | 0.8333    | 0.9736
+  0.88     | 0.7696  | 0.9251   | 0.8402    | 0.9763 ← OPTIMAL
+
+✓ Threshold sensitivity analysis (before calibration) saved to 'tabnet_bayesian/threshold_sensitivity_analysis_before_calibration.csv'
+
+============================================================
+DETERMINE BEST CALIBRATION METHOD
+============================================================
+
+ECE test per method:
+  • Original TabNet: 0.046801
+  • BBQ: 0.000996
+  • Temperature Scaling: 0.046562
+  • Isotonic Regression: 0.003008
+
+✓ Best calibration method based on test ECE: BBQ
+
+============================================================
+OPTIMIZING THRESHOLD FOR BBQ
+============================================================
+✓ Optimal threshold for BBQ: 0.34
+✓ Best validation F1 for BBQ: 0.852713
+
+============================================================
+THRESHOLD SENSITIVITY ANALYSIS - AFTER CALIBRATION
+============================================================
+
+Threshold | Recall | Precision | F1-Score | Accuracy
+------------------------------------------------------------
+  0.10     | 0.9919  | 0.6224   | 0.7649    | 0.9506
+  0.12     | 0.9919  | 0.6224   | 0.7649    | 0.9506
+  0.14     | 0.9919  | 0.6224   | 0.7649    | 0.9506
+  0.16     | 0.9919  | 0.6224   | 0.7649    | 0.9506
+  0.18     | 0.9919  | 0.6224   | 0.7649    | 0.9506
+  0.20     | 0.9919  | 0.6224   | 0.7649    | 0.9506
+  0.22     | 0.9756  | 0.6417   | 0.7742    | 0.9539
+  0.24     | 0.9621  | 0.6723   | 0.7915    | 0.9589
+  0.26     | 0.9621  | 0.6723   | 0.7915    | 0.9589
+  0.28     | 0.8835  | 0.7512   | 0.8120    | 0.9668
+  0.30     | 0.8835  | 0.7512   | 0.8120    | 0.9668
+  0.32     | 0.8591  | 0.7676   | 0.8107    | 0.9675
+  0.34     | 0.7534  | 0.9964   | 0.8580    | 0.9798 ← OPTIMAL
+  0.36     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.38     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.40     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.42     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.44     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.46     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.48     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.50     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.52     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.54     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.56     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.58     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.60     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.62     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.64     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.66     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.68     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.70     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.72     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.74     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.76     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.78     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.80     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.82     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.84     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.86     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+  0.88     | 0.7534  | 0.9964   | 0.8580    | 0.9798
+
+✓ Threshold sensitivity analysis (after calibration) saved to 'tabnet_bayesian/threshold_sensitivity_analysis_after_calibration.csv'
+
+============================================================
+FINAL PREDICTIONS WITH OPTIMAL THRESHOLDS
+============================================================
+
+============================================================
+SAVING TEST PREDICTIONS TO CSV
+============================================================
+✓ Test predictions saved to 'tabnet_bayesian/test_predictions.csv'
+
+============================================================
+CONFUSION MATRIX - BEFORE CALIBRATION
+============================================================
+✓ Confusion matrix before calibration saved to 'tabnet_bayesian/confusion_matrix_before_calibration.png'
+
+============================================================
+CONFUSION MATRIX - AFTER CALIBRATION
+============================================================
+✓ Confusion matrix after calibration saved to 'tabnet_bayesian/confusion_matrix_after_calibration.png'
+
+============================================================
+ROC CURVE - BEFORE CALIBRATION
+============================================================
+✓ ROC curve (before calibration) saved to 'tabnet_bayesian/roc_curve_before_calibration.png'
+
+============================================================
+ROC CURVE - AFTER CALIBRATION (BBQ)
+============================================================
+✓ ROC curve after calibration (BBQ) saved to 'tabnet_bayesian/roc_curve_after_calibration.png'
+
+============================================================
+RELIABILITY DIAGRAMS
+============================================================
+✓ Reliability diagram for Original TabNet saved to 'tabnet_bayesian/reliability_diagram_original_tabnet.png'
+✓ Reliability diagram for BBQ saved to 'tabnet_bayesian/reliability_diagram_bbq.png'
+✓ Reliability diagram for Temperature Scaling saved to 'tabnet_bayesian/reliability_diagram_temperature_scaling.png'
+✓ Reliability diagram for Isotonic Regression saved to 'tabnet_bayesian/reliability_diagram_isotonic_regression.png'
+
+============================================================
+CALIBRATION ANALYSIS - COMBINED RELIABILITY DIAGRAMS
+============================================================
+✓ Calibration analysis (combined) saved to 'tabnet_bayesian/calibration_analysis.png'
+
+============================================================
+METRIK EVALUASI
+============================================================
+
+========================================
+TABNET MURNI - PERFORMANCE METRICS
+========================================
+  • Accuracy:   0.976279
+  • Precision:  0.925081
+  • Recall:     0.769648
+  • F1-Score:   0.840237
+  • ROC AUC:    0.993625
+  • Brier Score: 0.036816
+  • ECE:        0.046801
+  • Optimal Threshold: 0.88
+
+========================================
+AFTER KALIBRASI - PERFORMANCE METRICS
+========================================
+  • Accuracy:   0.979794
+  • Precision:  0.996416
+  • Recall:     0.753388
+  • F1-Score:   0.858025
+  • ROC AUC:    0.992498
+  • Brier Score: 0.014546
+  • ECE:        0.000996
+  • Optimal Threshold: 0.34
+
+============================================================
+CALIBRATION RESULTS
+============================================================
+
+CALIBRATION RESULTS:
+             Method      ECE  Brier Score  ECE_Improvement_%  Brier_Improvement_%
+    Original TabNet 0.046801     0.036816           0.000000             0.000000
+                BBQ 0.000996     0.014546          97.870984            60.490444
+Temperature Scaling 0.046562     0.031436           0.511660            14.611956
+Isotonic Regression 0.003008     0.014453          93.571726            60.742344
+
+============================================================
+SAVING OTHER RESULTS
+============================================================
+Successfully saved model at tabnet_bayesian/tabnet_model_optimized.zip.zip
+✓ All results saved to 'tabnet_bayesian/' directory
+
+============================================================
+FINAL SUMMARY
+============================================================
+
+STRATEGI YANG DIGUNAKAN:
+  • Split ratio: 80-10-10 (dengan stratifikasi)
+  • Missing value handling: KNN Imputer (n_neighbors=5)
+  • Outlier handling: Winsorization (percentile 1-99)
+  • Hyperparameter tuning: Optuna dengan 30 trials (ONLY on training data)
+  • Normalization: ONLY on train data (fit_transform), validation/test using transform only
+  • Tanpa class weight (standard loss)
+
+OUTLIER HANDLING:
+  • Total outliers handled: 4478
+
+DATA SPLIT (80-10-10):
+  • Training set: 36422 samples (80.0%)
+  • Validation set: 4553 samples (10.0%)
+  • Test set: 4553 samples (10.0%)
+
+BEST HYPERPARAMETERS:
+  • n_da: 56
+  • n_steps: 10
+  • gamma: 1.9791715302771704
+  • n_independent: 2
+  • n_shared: 3
+  • momentum: 0.06315153770265473
+  • lambda_sparse: 1.1555751696611154e-06
+  • clip_value: 0.9587981205495992
+  • lr: 0.006180489033395728
+  • weight_decay: 7.019218799818284e-05
+  • batch_size: 256
+  • virtual_batch_size: 512
+  • max_epochs: 41
+
+BEST CALIBRATION METHOD:
+  • BBQ
+  • ECE Improvement: 97.87%
+  • Final ECE: 0.000996
+
+TEST SET PERFORMANCE (TABNET MURNI):
+  • Accuracy:  0.976279
+  • Precision: 0.925081
+  • Recall:    0.769648
+  • F1-Score:  0.840237
+  • ROC AUC:   0.993625
+  • ECE:       0.046801
+
+TEST SET PERFORMANCE (AFTER {best_calib_method} CALIBRATION):
+  • Accuracy:  0.979794
+  • Precision: 0.996416
+  • Recall:    0.753388
+  • F1-Score:  0.858025
+  • ROC AUC:   0.992498
+  • ECE:       0.000996
+
+OUTPUT FILES:
+  CSV FILES:
+  ✓ original_dataset.csv - Original dataset before any processing (ADDED)
+  ✓ test_data_before_normalization.csv - Test data BEFORE normalization (ADDED)
+  ✓ train_data_before_normalization.csv - Train data BEFORE normalization (ADDED)
+  ✓ valid_data_before_normalization.csv - Validation data BEFORE normalization (ADDED)
+  ✓ test_data_after_normalization.csv - Test data after normalization
+  ✓ train_data_after_normalization.csv - Train data after normalization
+  ✓ valid_data_after_normalization.csv - Validation data after normalization
+  ✓ processed_dataset.csv - Complete processed dataset
+  ✓ data_split_summary.csv - Data split summary
+  ✓ logits_asli_train.csv - Logits asli TabNet untuk data train
+  ✓ logits_asli_valid.csv - Logits asli TabNet untuk data validasi
+  ✓ logits_asli_test.csv - Logits asli TabNet untuk data test
+  ✓ logits_asli_semua_split.csv - Gabungan logits asli seluruh split
+  ✓ test_predictions.csv - Prediksi lengkap dengan berbagai metode kalibrasi
+  ✓ calibration_results.csv - Hasil kalibrasi (ECE dan Brier Score)
+  ✓ model_comparison.csv - Perbandingan metrik model (tanpa specificity)
+  ✓ feature_importance.csv - Feature importance model TabNet
+  ✓ outlier_summary.csv - Ringkasan outlier yang di-handle
+  ✓ test_mask_heatmap.csv - Data heatmap mask
+  ✓ test_aggregate_mask_importance.csv - Data aggregate mask importance
+  ✓ best_hyperparameters.csv - Hyperparameter terbaik Optuna
+  ✓ importance_comparison.csv - Perbandingan mask importance vs model importance
+  ✓ threshold_sensitivity_analysis_before_calibration.csv - Threshold sensitivity before calibration
+  ✓ threshold_sensitivity_analysis_after_calibration.csv - Threshold sensitivity after calibration
+
+  GAMBAR:
+  ✓ test_mask_heatmap.png - Heatmap mask
+  ✓ test_aggregate_mask_importance.png - Aggregate mask importance
+  ✓ importance_comparison.png - Perbandingan mask vs model importance
+  ✓ model_feature_importance.png - Model feature importance
+  ✓ roc_curve_before_calibration.png - ROC curve sebelum kalibrasi
+  ✓ roc_curve_after_calibration.png - ROC curve setelah kalibrasi (BBQ)
+  ✓ confusion_matrix_before_calibration.png - Confusion matrix sebelum kalibrasi
+  ✓ confusion_matrix_after_calibration.png - Confusion matrix setelah kalibrasi
+  ✓ reliability_diagram_original_tabnet.png - Reliability diagram Original TabNet
+  ✓ reliability_diagram_bbq.png - Reliability diagram BBQ
+  ✓ reliability_diagram_temperature_scaling.png - Reliability diagram Temperature Scaling
+  ✓ reliability_diagram_isotonic_regression.png - Reliability diagram Isotonic Regression
+  ✓ calibration_analysis.png - Gabungan 4 reliability diagram dalam 1 figure
+
+  MODEL FILES:
+  ✓ tabnet_model_optimized.zip - Model TabNet final
+  ✓ knn_imputer.pkl - KNN Imputer
+  ✓ bbq.pkl - BBQ calibration model
+  ✓ temperature_scaling.pkl - Temperature Scaling model
+  ✓ isotonic_regression.pkl - Isotonic Regression model
+  ✓ scaler.pkl - StandardScaler
+  ✓ label_encoders.pkl - Label encoders
+
+============================================================
+PROCESSING COMPLETED SUCCESSFULLY
+============================================================
