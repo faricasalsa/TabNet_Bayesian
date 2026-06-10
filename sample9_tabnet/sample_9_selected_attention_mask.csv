@@ -1,0 +1,12 @@
+Step,Feature,x_norm,Mask
+1,credit_limit_used(%),97.0,1.0
+2,credit_score,-2.2520368,0.9264497756958008
+2,prev_defaults,1.0,0.07355022430419922
+3,owns_car_missing,-0.109174095,1.0
+4,prev_defaults,1.0,1.0
+5,credit_limit,0.03642351,1.0
+6,age,-0.41929305,1.0
+7,gender,1.0,1.0
+8,migrant_worker_missing,0.0,1.0
+9,credit_score,-2.2520368,1.0
+10,no_of_children_missing,-0.13051206,1.0
