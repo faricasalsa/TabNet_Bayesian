@@ -1,0 +1,4 @@
+Dataset,Samples,Default_Count,Non_Default_Count,Default_Ratio
+Training,36422,2958,33464,0.08121465048597001
+Validation,4553,370,4183,0.08126509993410938
+Test,4553,369,4184,0.08104546452888206

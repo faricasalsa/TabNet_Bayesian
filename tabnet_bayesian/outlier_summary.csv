@@ -1,0 +1,16 @@
+Feature,Lower Percentile,Upper Percentile,Lower Bound,Upper Bound,Lower Outliers Winsorized,Upper Outliers Winsorized,Total Outliers Handled
+age,0.01,0.99,23.0,55.0,0,0,0
+net_yearly_income,0.01,0.99,53741.7189,577901.5120000002,456,456,912
+no_of_days_employed,0.01,0.99,116.0,365252.0,437,0,437
+total_family_members,0.01,0.99,1.0,5.0,0,78,78
+yearly_debt_payments,0.01,0.99,7163.5163,84377.59350000008,456,456,912
+credit_limit,0.01,0.99,9097.2686,145102.3042,456,456,912
+credit_score,0.01,0.99,525.0,946.0,444,428,872
+no_of_children,0.01,0.99,0.0,3.0,0,82,82
+owns_car_missing,0.01,0.99,0.0,1.0,0,0,0
+no_of_children_missing,0.01,0.99,0.0,1.0,0,0,0
+no_of_days_employed_missing,0.01,0.99,0.0,1.0,0,0,0
+total_family_members_missing,0.01,0.99,0.0,0.0,0,83,83
+migrant_worker_missing,0.01,0.99,0.0,0.0,0,87,87
+yearly_debt_payments_missing,0.01,0.99,0.0,0.0,0,95,95
+credit_score_missing,0.01,0.99,0.0,0.0,0,8,8

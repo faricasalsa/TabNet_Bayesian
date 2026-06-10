@@ -1,0 +1,2 @@
+n_da,n_steps,gamma,n_independent,n_shared,momentum,lambda_sparse,clip_value,lr,weight_decay,batch_size,virtual_batch_size,max_epochs
+56,10,1.9791715302771704,2,3,0.06315153770265473,1.1555751696611154e-06,0.9587981205495992,0.006180489033395728,7.019218799818284e-05,256,512,41
